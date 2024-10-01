@@ -9,3 +9,7 @@ Here are the steps to run the task.
 ## Resize the Origin Images
 
 First, we resize the images that we take to 640*640, to make it sutiable for the following task, you could see the code in script `resize_images.py`. You could use it by just changing the data location.
+
+## Use LabelImg to label the data
+
+To change the origin images to annotations, we use the tool `LabelImg` to mark the data, the code is in the folder `labelimg`.
