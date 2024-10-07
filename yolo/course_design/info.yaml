@@ -1,0 +1,8 @@
+# train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
+train: ../course_design/images/
+val: ../course_design/images/
+# number of classes
+nc: 13
+
+# class names
+names: ['can_drink', 'bottle_drink', 'box_milk', 'bottle_water', 'chopsticks', 'bowl', 'hanger', 'chips', 'instant_noddles', 'chewing_gum', t'oilet_paper', 'soap', 'pen']

@@ -1,0 +1,1 @@
+python train.py --img 640 --batch 50 --epochs 100 --data ./course_design/info.yaml --weights yolov5s.pt --nosave --cache
