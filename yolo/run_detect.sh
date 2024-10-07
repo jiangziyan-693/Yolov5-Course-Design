@@ -1,0 +1,1 @@
+python detect.py --weights runs/train/exp/weights/best.pt --source course_design/images/IMG_7658.JPG --conf-thres 0.4 --iou-thres 0.5
