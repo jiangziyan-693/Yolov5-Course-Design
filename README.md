@@ -13,3 +13,15 @@ First, we resize the images that we take to 640*640, to make it sutiable for the
 ## Use LabelImg to label the data
 
 To change the origin images to annotations, we use the tool `LabelImg` to mark the data, the code is in the folder `labelimg`.
+
+## Use Yolov5 to train the model
+
+We use yolov5 to train the model, the image in folder `yolov5/course_design/images`, the labels in folder `yolov5/course_design/labels`, you can change training set, validation set, number of classes, class names in `info.yaml`.
+
+To train the model, adjust the config in  `run_course_design.sh`, and input following code in terminal:
+
+```py
+sh run_course_design.sh
+```
+
+After training, you will get the result in folder`yolov5/runs/train`.
