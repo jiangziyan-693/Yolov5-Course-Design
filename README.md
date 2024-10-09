@@ -25,3 +25,7 @@ sh run_course_design.sh
 ```
 
 After training, you will get the result in folder`yolov5/runs/train`.
+
+## Visualizing results with PyQt5
+
+We use PyQt5 to visualize the detecting results. We put the best trained weights in folder `yolov5/runs/train/exp/weights/best.pt` into folder `PyQt5-YOLOv5/pt`, and then rename it as "yolov5s.pt". To detect the result, you can run the `main.py` in folder `PyQt5-YOLOv5` to show the Visual interactive interface.
