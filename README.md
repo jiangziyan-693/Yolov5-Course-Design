@@ -16,7 +16,7 @@ To change the origin images to annotations, we use the tool `LabelImg` to mark t
 
 ## Use Yolov5 to train the model
 
-We use yolov5 to train the model, the image in folder `yolov5/course_design/images`, the labels in folder `yolov5/course_design/labels`, you can change training set, validation set, number of classes, class names in `info.yaml`.
+We use yolov5 to train the model, the image in folder `yolo/course_design/images`, the labels in folder `yolo/course_design/labels`, you can change training set, validation set, number of classes, class names in `info.yaml`.
 
 To train the model, adjust the config in  `run_course_design.sh`, and input following code in terminal:
 
@@ -24,8 +24,17 @@ To train the model, adjust the config in  `run_course_design.sh`, and input foll
 sh run_course_design.sh
 ```
 
-After training, you will get the result in folder`yolov5/runs/train`.
+After training, you will get the result in folder `yolo/runs/train`.
 
 ## Visualizing results with PyQt5
 
-We use PyQt5 to visualize the detecting results. We put the best trained weights in folder `yolov5/runs/train/exp/weights/best.pt` into folder `PyQt5-YOLOv5/pt`, and then rename it as "yolov5s.pt". To detect the result, you can run the `main.py` in folder `PyQt5-YOLOv5` to show the Visual interactive interface.
+We use PyQt5 to visualize the detecting results. You can read the detailed code in the folder `yolo/init_ui.py`.
+
+We realize the following functions:
+
+1. Input image: by clicking the "Input Image" button, you can choose a image from your computer, and at the same time show the image in the right layout.
+2. Run detection: by clicking the green button on the top of the left layout, you can start detecting the image you input.
+3. Show result: by clicking the "Show Result" button, you can see the detection image as well as all the categories in the right layout.
+4. Clear image: by clicking the "Show Result" button, you can clear the result.
+5. Show minimized: by clicking the yellow button on the top of the left layout, you can minimize the window.
+6. Close: by clicking the yellow button on the top of the left layout, you can close the window.

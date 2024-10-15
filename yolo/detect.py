@@ -37,6 +37,10 @@ from pathlib import Path
 
 import torch
 
+import pathlib
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
+
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
 if str(ROOT) not in sys.path:
@@ -180,6 +184,7 @@ def run(
     vid_path, vid_writer = [None] * bs, [None] * bs
 
     # Run inference
+    class_counts = {}
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(device=device), Profile(device=device), Profile(device=device))
     for path, im, im0s, vid_cap, s in dataset:
@@ -208,6 +213,21 @@ def run(
         # NMS
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
+
+        # Process predictions
+        for det in pred:  # per image
+            if len(det):
+                # Iterate over each detection
+                for *xyxy, conf, cls in reversed(det):
+                    c = int(cls)  # integer class
+                    detected_class_name = names[c]  # get the class name
+                    # 更新类别计数
+                    if detected_class_name in class_counts:
+                        class_counts[detected_class_name] += 1
+                    else:
+                        class_counts[detected_class_name] = 1
+
+                    label = detected_class_name if hide_conf else f"{detected_class_name} {conf:.2f}"
 
         # Second-stage classifier (optional)
         # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
@@ -318,6 +338,7 @@ def run(
         LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
+    return class_counts
 
 
 def parse_opt():
