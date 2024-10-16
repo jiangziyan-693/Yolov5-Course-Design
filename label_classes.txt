@@ -1,0 +1,13 @@
+CC001 can_drink
+CC002 bottle_drink
+CC003 box_milk
+CC004 bottle_water
+CA002 chopsticks
+CA003 bowl
+CA004 hanger
+CB004 chips
+W001 instant_noddles
+W002 chewing_gum
+W003 toilet_paper
+W004 soap
+W005 pen
