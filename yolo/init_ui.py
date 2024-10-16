@@ -4,6 +4,9 @@ import sys
 import qtawesome
 from detect import run, parse_opt
 import os
+from PyQt5 import QtGui, QtCore
+from PIL import Image
+import io
 
 class MainUi(QtWidgets.QMainWindow):
     def __init__(self):
@@ -155,11 +158,34 @@ class MainUi(QtWidgets.QMainWindow):
             self.display_image(file_name)
 
     def display_image(self, file_path):
-        # 在 QLabel 中显示图片
-        pixmap = QtGui.QPixmap(file_path)
+        # 打开图像并处理方向
+        image = Image.open(file_path)
+
+        # 获取EXIF数据
+        exif = image._getexif()
+        if exif:
+            # 获取方向信息
+            orientation = exif.get(274)  # 274 is the EXIF tag for orientation
+            if orientation == 3:
+                image = image.rotate(180, expand=True)
+            elif orientation == 6:
+                image = image.rotate(270, expand=True)
+            elif orientation == 8:
+                image = image.rotate(90, expand=True)
+
+        # 将 PIL 图像转换为 QPixmap
+        buffer = io.BytesIO()
+        image.save(buffer, format="PNG")
+        qt_image = QtGui.QImage()
+        qt_image.loadFromData(buffer.getvalue())
+
+        pixmap = QtGui.QPixmap(qt_image)
+
         if pixmap.isNull():
             print("Failed to load image.")
             return
+
+        # 在 QLabel 中显示调整后的图片
         self.image_label.setPixmap(pixmap.scaled(self.image_label.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
 
     def clear_image(self):
@@ -207,7 +233,7 @@ class MainUi(QtWidgets.QMainWindow):
         if not os.listdir(self.result_dir):
             print("No list direction found.")
             return
-        images = [f for f in os.listdir(self.result_dir) if f.endswith(('.png', '.JPG', '.jpeg'))]
+        images = [f for f in os.listdir(self.result_dir) if f.endswith(('.png', '.JPG', '.jpg', '.jpeg'))]
 
         if images:
             # 选择第一张图片作为示例

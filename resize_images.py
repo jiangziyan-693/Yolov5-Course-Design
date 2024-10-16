@@ -26,8 +26,8 @@ def resize_images(input_folder, output_folder, size=(640, 640)):
 
 # 使用示例
 def main():
-    input_folder = 'C:/Users/jiang/Desktop/yolov5/input_folder'
-    output_folder = 'C:/Users/jiang/Desktop/yolov5/output_folder'
+    input_folder = 'C:/Users/rainbow/Desktop/image2'
+    output_folder = 'C:/Users/rainbow/Desktop/output'
     resize_images(input_folder, output_folder)
     
 if __name__ == "__main__":
